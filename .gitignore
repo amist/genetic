@@ -1,0 +1,7 @@
+*.pyc
+images/
+.metadata/
+.project
+.pydevproject
+*.p
+*.json
