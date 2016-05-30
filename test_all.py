@@ -1,13 +1,16 @@
 import sys
 from ge.core.genetic_executor import GeneticExecutor
-
+from ge.problems.sphere import Sphere
 
 def test_problem(problem, target_value):
     print(problem, end=' ')
     sys.stdout.flush()
     TIMES_TO_FAIL = 5
     
-    ge_config = {}
+    ge_config = {'problem': problem,
+                 'environment_kwargs': {},
+                 'individual_kwargs': {},
+                }
     
     # Randomized algorithm, so it needs to fail TIMES_TO_FAIL times to be considered failure
     for _ in range(TIMES_TO_FAIL):
@@ -27,16 +30,11 @@ def test_problem(problem, target_value):
             return True
     print('FAIL')
     return False
-    
-
-def test_dummy():
-    ge = GeneticExecutor()
-    sol = ge.get_solution()
 
 
 def test_all():
     result = True
-    result &= test_problem('dummy', 0)
+    result &= test_problem('Sphere', 0)
     
     
 if __name__ == '__main__':
