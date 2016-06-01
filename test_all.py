@@ -2,15 +2,20 @@ import sys
 from ge.core.genetic_executor import GeneticExecutor
 from ge.problems.sphere import Sphere
 
-def test_problem(problem, target_value):
+def test_problem(problem, min_max, target_value):
     print(problem, end=' ')
     sys.stdout.flush()
     TIMES_TO_FAIL = 5
     
     ge_config = {'problem': problem,
+                 'min_max': min_max,
                  'environment_kwargs': {},
                  'individual_kwargs': {},
                 }
+                
+    target_sign = 1
+    if ge_config['min_max'] == 'min':
+        target_sign = -1
     
     # Randomized algorithm, so it needs to fail TIMES_TO_FAIL times to be considered failure
     for _ in range(TIMES_TO_FAIL):
@@ -19,7 +24,7 @@ def test_problem(problem, target_value):
         print(solution.get_fitness_value(), end=' ')
         sys.stdout.flush()
         try:
-            assert solution.get_fitness_value() >= -target_value
+            assert target_sign * solution.get_fitness_value() >= target_sign * target_value
         except AssertionError:
             # Don't do anything. Will fail outside of the loop after TIMES_TO_FAIL times
             pass
@@ -34,7 +39,14 @@ def test_problem(problem, target_value):
 
 def test_all():
     result = True
-    result &= test_problem('Sphere', 0)
+    result &= test_problem('Sphere', 'min', 10)
+    result &= test_problem('Sphere', 'max', 350)
+    
+    if result:
+        print('OK')
+    else:
+        print('FAIL')
+        sys.exit(1)
     
     
 if __name__ == '__main__':
