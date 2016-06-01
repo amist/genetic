@@ -7,14 +7,16 @@ def test_problem(problem, min_max, target_value):
     sys.stdout.flush()
     TIMES_TO_FAIL = 5
     
-    ge_config = {'problem': problem,
-                 'min_max': min_max,
-                 'environment_kwargs': {},
+    ge_config = {
+                 'problem': problem,
+                 'environment_kwargs': {
+                                        'min_max': min_max,
+                                       },
                  'individual_kwargs': {},
                 }
                 
     target_sign = 1
-    if ge_config['min_max'] == 'min':
+    if min_max == 'min':
         target_sign = -1
     
     # Randomized algorithm, so it needs to fail TIMES_TO_FAIL times to be considered failure

@@ -24,9 +24,11 @@ class GeneticExecutor:
         
         for environment in self.environments:
             environment.initialize_population(problem_class, self.kwargs['individual_kwargs'])
+            environment.sort_population()
             
         print(self.environments[0].population[0])
         print(self.environments[0].population[0].chromosome)
+        print(self.environments[0].population[0].get_fitness_value())
         
         return self.environments[0].population[0]
         
