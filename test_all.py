@@ -11,8 +11,11 @@ def test_problem(problem, min_max, target_value):
                  'problem': problem,
                  'environment_kwargs': {
                                         'min_max': min_max,
+                                        'individual_kwargs': {
+                                                              'size': 2
+                                                             },
                                        },
-                 'individual_kwargs': {},
+                 
                 }
                 
     target_sign = 1
@@ -41,8 +44,8 @@ def test_problem(problem, min_max, target_value):
 
 def test_all():
     result = True
-    result &= test_problem('Sphere', 'min', 10)
-    result &= test_problem('Sphere', 'max', 350)
+    result &= test_problem('Sphere', 'min', 1)
+    result &= test_problem('Sphere', 'max', 24)
     
     if result:
         print('OK')
